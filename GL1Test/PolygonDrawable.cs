@@ -10,6 +10,8 @@ public class PolygonDrawable : Drawable {
 
 	public PolygonDrawable(Vector2[] points) {
 		this.Points = points;
+		
+		this.LineWidth = 1f;
 	}
 	
 	public override void Draw(GL gl) {

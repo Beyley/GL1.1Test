@@ -32,6 +32,8 @@ public class CircleDrawable : Drawable {
 		this.Position = position;
 		this.radius   = radius;
 		this.quality  = quality;
+
+		this.LineWidth = 1f;
 		
 		this.Recalculate();
 	}

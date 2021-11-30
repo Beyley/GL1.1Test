@@ -12,6 +12,8 @@ public class TriangleDrawable : Drawable {
 		this.P1 = p1;
 		this.P2 = p2;
 		this.P3 = p3;
+		
+		this.LineWidth = 1f;
 	}
 
 	public override void Draw(GL gl) {

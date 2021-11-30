@@ -10,6 +10,8 @@ public class RectangleDrawable : Drawable {
 	public RectangleDrawable(Vector2 p1, Vector2 p2) {
 		this.P1 = p1;
 		this.P2 = p2;
+		
+		this.LineWidth = 1f;
 	}
 
 	public override void Draw(GL gl) {

@@ -54,6 +54,8 @@ internal class Program {
 
 	private static void OnLoad() {
 		gl = window.CreateLegacyOpenGL();
+		
+		// gl.Enable(EnableCap.Multisample);
 
 		//Set-up input context.
 		IInputContext input = window.CreateInput();
@@ -65,13 +67,13 @@ internal class Program {
 		
 		Drawables.Add(triangle = new TriangleDrawable(new(400, 500f), new(0, 600), new(800, 600)));
 		Drawables.Add(new RectangleDrawable(new(400, 400), new(500, 500)));
-		Drawables.Add(new PolygonDrawable(new [] {
-			new Vector2(200, 200), 
-			new Vector2(220, 180), 
+		Drawables.Add(new PolygonDrawable(new[] {
+			new Vector2(200, 200),
+			new Vector2(220, 180),
 			new Vector2(230, 200),
 			new Vector2(250, 220),
-			new Vector2(200, 220), 
-		}));
+			new Vector2(200, 220)
+		}) /* { Type = PrimitiveType.LineLoop, LineWidth = 5f } */ );
 		
 		Drawables.Add(new CircleDrawable(new(100), 20f));
 	}
@@ -81,7 +83,9 @@ internal class Program {
 		gl.ClearDepth(1f);
 		gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-		Color lastColor = new(255, 255, 255, 255);
+		Color lastColor     = new(255, 255, 255, 255);
+		float lastLineWidth = -1f;
+		float lastPointSize = -1f;
 		
 		gl.Color4(lastColor.R, lastColor.G, lastColor.B, lastColor.A);
 		for (int i = 0; i < Drawables.Count; i++) {
@@ -90,6 +94,17 @@ internal class Program {
 				lastColor = drawable.Color;
 				gl.Color4(lastColor.R, lastColor.G, lastColor.B, lastColor.A);
 			}
+			
+			if (drawable.LineWidth != lastLineWidth && drawable.LineWidth != -1) {
+				lastLineWidth = drawable.LineWidth;
+				gl.LineWidth(drawable.LineWidth);
+			}
+			
+			if (drawable.PointSize != lastPointSize && drawable.PointSize != -1) {
+				lastPointSize = drawable.PointSize;
+				gl.PointSize(drawable.PointSize);
+			}
+			
 			drawable.Draw(gl);
 		}
 	
